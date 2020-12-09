@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="com.ea7jmf.kodi.canalsur" version="1.0.0" name="Kodi Plugin para CanalSur" provider-name="yeyus">
+    <requires>
+        <import addon="xbmc.python" version="2.26.0"/>
+        <import addon="script.module.routing" version="0.2.0"/>
+        <import addon="script.module.requests" version="2.25.0"/>        
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Kodi Plugin para CanalSur</summary>
+        <description lang="en_GB">A simple video plugin for watching CanalSur videos.</description>
+        <description lang="es_ES">Plugin para ver videos de CanalSur en Kodi.</description>
+        <disclaimer lang="en_GB">Videos are property and copyrighted by RTVA Andalucia.</disclaimer>
+        <disclaimer lang="es_ES">Los videos son propiedad y tienen copyright de RTVA Andalucia.</disclaimer>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+        <news>What's new</news>
+    </extension>
+</addon>
