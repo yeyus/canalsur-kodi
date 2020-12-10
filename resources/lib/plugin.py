@@ -37,12 +37,6 @@ def add_menu_item(method, label, args=None, art=None, info=None, directory=True)
     label = ku.localize(label) if isinstance(label, int) else label
     list_item = ListItem(label)
     list_item.setArt(art)
-    if method == search and "q" in args:
-        # saved search menu items can be removed via context menu
-        list_item.addContextMenuItems([(
-            ku.localize(32019),
-            "XBMC.RunPlugin({})".format(plugin.url_for(search, delete=True, q=label))
-        )])
     if method == play_film:
         list_item.setInfo("video", info)
         list_item.setProperty("IsPlayable", "true")
@@ -69,13 +63,14 @@ def programas():
     category = get_arg("category", CATEGORY_PROGRAMAS)  # Programas
     if not href:
         # Listado de Programas menu
-        programas = canalsur.get_programas()
-        for programa in programas:
-            add_menu_item(programmes,
+        ps = canalsur.get_programas()
+        for programa in ps:
+            logger.info("programas->ku.art = {}".format(programa.thumbnail()))
+            add_menu_item(programas,
                             programa.nombre,
-                            info={"plot": programa.descripcion},
-                            args={"href": programa.id, "category": programa.nombre},
-                            art=ku.art(bps.get_uri(programa.thumbnail())))
+                            info={"plot": programa.descripcion.encode("ascii","ignore")},
+                            args={"href": programa.id, "category": programa.nombre.encode("ascii","ignore")},
+                            art=ku.art(programa.thumbnail()))
     else:
         # Lista de Capitulos del programa (href es programaId)
         capitulos = canalsur.get_capitulos(id=href)        
@@ -85,11 +80,11 @@ def programas():
                           args={ 
                               "href": capitulo.id, 
                               "videoUrl": capitulo.url[0],
-                              "capitulo": capitulo.capitulo,
+                              "capitulo": capitulo.capitulo.encode("ascii","ignore"),
                               "fecha": capitulo.fecha
                           },
                           info={
-                              "plot": capitulo.capitulo
+                              "plot": capitulo.capitulo.encode("ascii","ignore")
                           },
                           art=ku.art(capitulo.tapa),
                           directory=False)
